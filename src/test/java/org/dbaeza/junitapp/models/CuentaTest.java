@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
@@ -30,5 +31,12 @@ class CuentaTest {
         Assertions.assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0); //es lo mismo de arriba
     }
 
+    @Test
+    void testReferenciaCuenta() {
+       Cuenta cuenta = new Cuenta("John Doe", new BigDecimal("8900.9997"));
+       Cuenta cuenta2 = new Cuenta("John Doe", new BigDecimal("8900.9997"));
 
+       //Assertions.assertNotEquals(cuenta2, cuenta);
+       Assertions.assertEquals(cuenta2, cuenta);
+    }
 }
