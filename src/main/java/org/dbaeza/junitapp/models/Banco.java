@@ -31,6 +31,7 @@ public class Banco {
 
     public void addCuenta(Cuenta cuenta){
         cuentas.add(cuenta);
+        cuenta.setBanco(this);
     }
 
     public void transferir(Cuenta origen, Cuenta destino, BigDecimal monto){
