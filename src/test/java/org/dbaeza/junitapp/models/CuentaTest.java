@@ -18,9 +18,9 @@ class CuentaTest {
         //cuenta.setPersona("Daniela");
         String esperado = "Daniela";
         String real = cuenta.getPersona();
-        assertNotNull(real);
-        Assertions.assertEquals(esperado, real);
-        Assertions.assertTrue(real.equals("Daniela"));
+        assertNotNull(real, () -> "La cuenta no puede ser nula"); // todos los assert pueden recibir un último argumento string para un mensaje
+        Assertions.assertEquals(esperado, real, () ->" El nombre de la cuenta no es el que se esperaba"); //si se deja solo el último argumento literal como string, se genera el mensaje si o si (no se muestra, pero usa memoria)
+        Assertions.assertTrue(real.equals("Daniela"), () -> "Nombre de la cuenta debe ser real a la real"); //() -> captura el error para mostrar el mensaje
 
     }
 
