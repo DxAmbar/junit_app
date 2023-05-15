@@ -1,5 +1,7 @@
 package org.dbaeza.junitapp.models;
 
+import org.dbaeza.junitapp.exceptions.DineroInsuficienteException;
+
 import java.math.BigDecimal;
 
 public class Cuenta {
@@ -25,6 +27,18 @@ public class Cuenta {
 
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
+    }
+
+    public void debito(BigDecimal monto){
+        BigDecimal nuevoSaldo = this.saldo.subtract(monto);
+        if(nuevoSaldo.compareTo(BigDecimal.ZERO) < 0){
+            throw new DineroInsuficienteException("Dinero Insuficiente");
+        }
+        this.saldo = nuevoSaldo;
+    }
+
+    public void credito(BigDecimal monto){
+        this.saldo = this.saldo.add(monto);
     }
 
     @Override
