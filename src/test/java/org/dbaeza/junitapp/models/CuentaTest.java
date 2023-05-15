@@ -93,21 +93,23 @@ class CuentaTest {
 
         banco.setNombre("Banco del Estado");
         banco.transferir(cuenta2, cuenta1, new BigDecimal(500));
-        assertEquals("1000.8989", cuenta2.getSaldo().toPlainString());
-        assertEquals("3000", cuenta1.getSaldo().toPlainString());
+        assertAll(  //con assertAll podemos obtener el detalle de cada fallo en la prueba
+                () -> assertEquals("1000.8989", cuenta2.getSaldo().toPlainString()), //separar con , los asserts
+                () -> assertEquals("3000", cuenta1.getSaldo().toPlainString()),
+                () -> assertEquals(2,banco.getCuentas().size()),
+                () -> assertEquals("Banco del Estado", cuenta1.getBanco().getNombre()),
+                () -> assertEquals("Daniela", banco.getCuentas().stream()
+                        .filter(c -> c.getPersona().equals("Daniela"))
+                        .findFirst()
+                        .get().getPersona()),
+                () -> assertTrue(banco.getCuentas().stream()
+                        /*.filter(c -> c.getPersona().equals("Daniela"))
+                        .findFirst().isPresent());
+                        otra forma:*/
+                        .anyMatch(c -> c.getPersona().equals("Daniela")))
 
-        assertEquals(2,banco.getCuentas().size());
-        assertEquals("Banco del Estado", cuenta1.getBanco().getNombre());
-        assertEquals("Daniela", banco.getCuentas().stream()
-                .filter(c -> c.getPersona().equals("Daniela"))
-                .findFirst()
-                .get().getPersona());
+        );
 
-        assertTrue(banco.getCuentas().stream()
-                /*.filter(c -> c.getPersona().equals("Daniela"))
-                .findFirst().isPresent());
-                otra forma:*/
-                .anyMatch(c -> c.getPersona().equals("Daniela")));
     }
 
 }
