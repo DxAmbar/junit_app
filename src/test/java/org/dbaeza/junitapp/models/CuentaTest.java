@@ -3,6 +3,8 @@ package org.dbaeza.junitapp.models;
 
 import org.dbaeza.junitapp.exceptions.DineroInsuficienteException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -13,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*; //para hacer assertions sin ne
 class CuentaTest {
 
     @Test
+    @DisplayName("Probando nombre de la cuenta")
     void testNombreCuenta(){
         Cuenta cuenta = new Cuenta("Daniela", new BigDecimal("102890.54"));
         //cuenta.setPersona("Daniela");
@@ -25,6 +28,7 @@ class CuentaTest {
     }
 
     @Test
+    @DisplayName("Testeando saldo en cuenta")
     void testSaldoCuenta() {
         Cuenta cuenta = new Cuenta("Daniela", new BigDecimal("1000.541"));
         assertNotNull(cuenta.getSaldo());
@@ -34,6 +38,7 @@ class CuentaTest {
     }
 
     @Test
+    @DisplayName("Referencia de la cuenta, que sean iguales con método equals")
     void testReferenciaCuenta() {
        Cuenta cuenta = new Cuenta("John Doe", new BigDecimal("8900.9997"));
        Cuenta cuenta2 = new Cuenta("John Doe", new BigDecimal("8900.9997"));
@@ -43,6 +48,7 @@ class CuentaTest {
     }
 
     @Test
+    @DisplayName("Saldo débito cuenta")
     void testDebitoCuenta() {
         Cuenta cuenta = new Cuenta("Daniela", new BigDecimal("1000.451"));
         cuenta.debito(new BigDecimal(100));
@@ -52,6 +58,7 @@ class CuentaTest {
     }
 
     @Test
+    @DisplayName("Crédito cuenta")
     void testCreditoCuenta() {
         Cuenta cuenta = new Cuenta("Daniela", new BigDecimal("1000.451"));
         cuenta.credito(new BigDecimal(100));
@@ -61,6 +68,7 @@ class CuentaTest {
     }
 
     @Test
+    @DisplayName("Error dinero insuficiente en cuenta")
     void testDineroInsuficienteExceptionCuenta() {
         Cuenta cuenta = new Cuenta("Daniela", new BigDecimal("1000.451"));
         Exception exception = assertThrows(DineroInsuficienteException.class, ()-> {
@@ -72,6 +80,7 @@ class CuentaTest {
     }
 
     @Test
+    @DisplayName("Transferir dinero a otra cuenta")
     void testTransferirDineroCuenta() {
         Cuenta cuenta1 = new Cuenta("Jhon Doe", new BigDecimal("2500"));
         Cuenta cuenta2 = new Cuenta("Daniela", new BigDecimal("1500.8989"));
@@ -83,7 +92,10 @@ class CuentaTest {
     }
 
     @Test
+    // @Disabled con esto queda deshabilitado el test, lo ignora y lo salta, aparece en el reporte
+    @DisplayName("Relación Banco-Cuentas y viceversa con assertAll")
     void testRelacionBancoCuentas() {
+        //con fail() se fuerza el error
         Cuenta cuenta1 = new Cuenta("Jhon Doe", new BigDecimal("2500"));
         Cuenta cuenta2 = new Cuenta("Daniela", new BigDecimal("1500.8989"));
 
